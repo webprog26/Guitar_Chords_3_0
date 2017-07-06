@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ChordsGenerator_0_3</string>
+
+    <string name="btn_start_title">Start</string>
 </resources>
