@@ -16,10 +16,12 @@ import java.util.ArrayList;
 
 public interface StartPresenter {
 
+    void setView(StartView startView);
     void onStart();
     void onStop();
     void readJSON(final StartView startView);
-    void convertJSONtoPOJOs();
+    void setSharedPreferencesMarkerJSONStringHasBeenRead();
+    void convertJSONtoPOJOs(final String jsonString);
     void addChordsToLocalDb(ArrayList<Chord> chords);
     @NonNull
     StartEventsHandler getEventsHandler();

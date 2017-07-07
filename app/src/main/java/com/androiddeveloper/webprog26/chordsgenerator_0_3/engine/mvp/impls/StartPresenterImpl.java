@@ -1,18 +1,14 @@
 package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.impls;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.EventsHandler;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.commands.ConvertJSONStringToPOJOsCommand;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.constants.Constants;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.StartEventsHandler;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.ReadJSONEvent;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.Chord;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.StartPresenter;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.StartView;
-
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 
 /**
@@ -22,6 +18,13 @@ import java.util.ArrayList;
 public class StartPresenterImpl implements StartPresenter {
 
     private static final String TAG = "StartPresenter";
+
+    private StartView mStartView;
+
+    @Override
+    public void setView(StartView startView) {
+        this.mStartView = startView;
+    }
 
     @Override
     public void onStart() {
@@ -42,8 +45,20 @@ public class StartPresenterImpl implements StartPresenter {
     }
 
     @Override
-    public void convertJSONtoPOJOs() {
+    public void setSharedPreferencesMarkerJSONStringHasBeenRead() {
+        StartView startView = getStartView();
 
+        if(startView != null){
+            startView.getSharedPreferences()
+                    .edit()
+                    .putBoolean(Constants.JSON_STRING_HAS_BEEN_READ_MARKER, true)
+                    .apply();
+        }
+    }
+
+    @Override
+    public void convertJSONtoPOJOs(final String jsonString) {
+        new ConvertJSONStringToPOJOsCommand(jsonString).execute();
     }
 
     @Override
@@ -57,4 +72,8 @@ public class StartPresenterImpl implements StartPresenter {
         return new StartEventsHandler(this);
     }
 
+
+    private StartView getStartView() {
+        return mStartView;
+    }
 }

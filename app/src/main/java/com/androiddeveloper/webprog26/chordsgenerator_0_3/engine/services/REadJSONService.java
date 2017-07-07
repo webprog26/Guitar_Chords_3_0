@@ -21,8 +21,6 @@ public class REadJSONService extends IntentService {
 
     private static final String TAG = "REadJSONService";
 
-    public static final String JSON_HAS_BEEN_READ_TAG = "json_has_been_read_tag";
-
     public REadJSONService() {
         super(TAG);
     }
@@ -30,6 +28,8 @@ public class REadJSONService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
 
-        Log.i(TAG, JSONReader.readJson(getAssets()));
+        EventBus.getDefault()
+            .postSticky(new JSONHasBeenReadEvent(JSONReader
+                                                .readJson(getAssets())));
     }
 }

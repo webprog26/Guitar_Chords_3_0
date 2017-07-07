@@ -12,4 +12,16 @@ public abstract class EventsHandler implements Subscriber{
 
     private static final String TAG = "EventsHandler";
 
+    @Override
+    public void subscribe() {
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void unsubscribe() {
+        if(EventBus.getDefault().isRegistered(this)){
+            Log.i(TAG, "unsubscribe");
+            EventBus.getDefault().unregister(this);
+        }
+    }
 }

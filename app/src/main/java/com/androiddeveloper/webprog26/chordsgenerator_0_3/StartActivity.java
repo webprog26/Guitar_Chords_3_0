@@ -1,12 +1,16 @@
 package com.androiddeveloper.webprog26.chordsgenerator_0_3;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.App;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.constants.Constants;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.dagger.modules.StartPresenterModule;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.StartPresenter;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.StartView;
@@ -33,6 +37,17 @@ public class StartActivity extends BaseActvity implements StartView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         ButterKnife.bind(this);
+
+        mStartPresenter.setView(this);
+
+        getBtnStart().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSharedPreferences().edit()
+                        .remove(Constants.JSON_STRING_HAS_BEEN_READ_MARKER)
+                        .apply();
+            }
+        });
     }
 
     @Override
@@ -44,8 +59,13 @@ public class StartActivity extends BaseActvity implements StartView{
     @Override
     protected void onResume() {
         super.onResume();
-//        if(!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("H", false))
-        getStartPresenter().readJSON(this);
+        if(!getSharedPreferences()
+                .getBoolean(Constants
+                        .JSON_STRING_HAS_BEEN_READ_MARKER, false)){
+
+            getStartPresenter().readJSON(this);
+        }
+
     }
 
     @Override
@@ -63,6 +83,12 @@ public class StartActivity extends BaseActvity implements StartView{
     public void startIntentService() {
         Intent readJSONIntent = new Intent(this, REadJSONService.class);
         startService(readJSONIntent);
+    }
+
+    @NonNull
+    @Override
+    public SharedPreferences getSharedPreferences() {
+        return PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     private ImageView getIvStartAppLogo() {

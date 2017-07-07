@@ -3,7 +3,10 @@ package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus;
 import android.util.Log;
 
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.JSONHasBeenReadEvent;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.JSONStringHasBeenConvertedToPOJOsEvent;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.ReadJSONEvent;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.Chord;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordShape;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.StartPresenter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -24,19 +27,6 @@ public class StartEventsHandler extends EventsHandler {
         this.mStartPresenter = startPresenter;
     }
 
-    @Override
-    public void subscribe() {
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void unsubscribe() {
-        if(EventBus.getDefault().isRegistered(this)){
-            Log.i(TAG, "unsubscribe");
-            EventBus.getDefault().unregister(this);
-        }
-    }
-
     private StartPresenter getStartPresenter() {
         return mStartPresenter;
     }
@@ -51,7 +41,27 @@ public class StartEventsHandler extends EventsHandler {
         JSONHasBeenReadEvent readEvent = EventBus.getDefault().removeStickyEvent(JSONHasBeenReadEvent.class);
 
         if(readEvent != null){
-            Log.i(TAG, jsonHasBeenReadEvent.getReadString());
+            final String jsonString = jsonHasBeenReadEvent.getReadString();
+
+            if(jsonString != null){
+
+                Log.i(TAG, jsonString);
+                getStartPresenter().setSharedPreferencesMarkerJSONStringHasBeenRead();
+
+                getStartPresenter().convertJSONtoPOJOs(jsonString);
+            }
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onJSONStringHasBeenConvertedToPOJOsEvent(JSONStringHasBeenConvertedToPOJOsEvent jsonStringHasBeenConvertedToPOJOsEvent){
+
+        for(Chord chord: jsonStringHasBeenConvertedToPOJOsEvent.getChords()){
+
+            for(ChordShape chordShape: chord.getChordShapes()){
+                Log.i(TAG, chordShape.toString());
+            }
+        }
+
     }
 }
