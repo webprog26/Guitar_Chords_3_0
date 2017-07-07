@@ -4,12 +4,14 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.commands.ConvertJSONStringToPOJOsCommand;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.commands.UploadChordsToLocalDbCommand;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.constants.Constants;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.StartEventsHandler;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.Chord;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.StartPresenter;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.StartView;
 import java.util.ArrayList;
+
 
 /**
  * Created by webprog on 06.07.17.
@@ -20,6 +22,8 @@ public class StartPresenterImpl implements StartPresenter {
     private static final String TAG = "StartPresenter";
 
     private StartView mStartView;
+
+
 
     @Override
     public void setView(StartView startView) {
@@ -63,7 +67,8 @@ public class StartPresenterImpl implements StartPresenter {
 
     @Override
     public void addChordsToLocalDb(ArrayList<Chord> chords) {
-
+        Log.i(TAG, "StartPresenter addChordsToLocalDb(ArrayList<Chord> chords)");
+        new UploadChordsToLocalDbCommand(chords).execute();
     }
 
     @NonNull
@@ -76,4 +81,5 @@ public class StartPresenterImpl implements StartPresenter {
     private StartView getStartView() {
         return mStartView;
     }
+
 }

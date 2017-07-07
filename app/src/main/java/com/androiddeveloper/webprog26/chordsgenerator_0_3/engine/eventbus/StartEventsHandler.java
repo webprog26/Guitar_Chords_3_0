@@ -2,9 +2,14 @@ package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus;
 
 import android.util.Log;
 
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.App;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.ChordsUploadedToDatabaseEvent;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.JSONHasBeenReadEvent;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.JSONStringHasBeenConvertedToPOJOsEvent;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.ReadJSONEvent;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.SingleChordLoadedToLocalDBEvent;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.UploadChordsToLocalDbEvent;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.provider.interfaces.DbProvider;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.Chord;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordShape;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.StartPresenter;
@@ -12,6 +17,10 @@ import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.StartPresen
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 /**
  * Created by webprog on 06.07.17.
@@ -23,8 +32,12 @@ public class StartEventsHandler extends EventsHandler {
 
     private final StartPresenter mStartPresenter;
 
+    @Inject
+    DbProvider dbProvider;
+
     public StartEventsHandler(StartPresenter startPresenter) {
         this.mStartPresenter = startPresenter;
+        App.getAppComponent().inject(this);
     }
 
     private StartPresenter getStartPresenter() {
@@ -55,13 +68,40 @@ public class StartEventsHandler extends EventsHandler {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onJSONStringHasBeenConvertedToPOJOsEvent(JSONStringHasBeenConvertedToPOJOsEvent jsonStringHasBeenConvertedToPOJOsEvent){
-
-        for(Chord chord: jsonStringHasBeenConvertedToPOJOsEvent.getChords()){
+        ArrayList<Chord> chords = jsonStringHasBeenConvertedToPOJOsEvent.getChords();
+        for(Chord chord: chords){
 
             for(ChordShape chordShape: chord.getChordShapes()){
                 Log.i(TAG, chordShape.toString());
             }
         }
 
+        if(chords != null && chords.size() > 0){
+            getStartPresenter().addChordsToLocalDb(chords);
+        }
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSingleChordLoadedToLocalDBEvent(SingleChordLoadedToLocalDBEvent singleChordLoadedToLocalDBEvent){
+        Log.i(TAG, singleChordLoadedToLocalDBEvent.getChordTitle() + " added to local db");
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onChordsUploadedToDatabaseEvent(ChordsUploadedToDatabaseEvent chordsUploadedToDatabaseEvent){
+        Log.i(TAG, "All th chords uploaded to local db");
+    }
+
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onUploadChordsToLocalDbEvent(UploadChordsToLocalDbEvent uploadChordsToLocalDbEvent){
+        try {
+            getDbProvider().insertChordsToDb(uploadChordsToLocalDbEvent.getChords());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private DbProvider getDbProvider() {
+        return dbProvider;
     }
 }
