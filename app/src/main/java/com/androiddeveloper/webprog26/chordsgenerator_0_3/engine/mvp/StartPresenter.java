@@ -22,6 +22,10 @@ public interface StartPresenter {
     void readJSON(final StartView startView);
     void setSharedPreferencesMarkerJSONStringHasBeenRead();
     void convertJSONtoPOJOs(final String jsonString);
+    void notifyStartViewOfChordsUploadingToDbStarted();
+    void notifyStartViewOfSingleChordHasBeenUploadedToDb(final String unpackedChordTitle);
+    void notifyStartViewOfAllTheChordsWereUploadedToDb();
+    void notifyStartViewOfChordsToBeUploadedCount(final int count);
     void addChordsToLocalDb(ArrayList<Chord> chords);
     @NonNull
     StartEventsHandler getEventsHandler();

@@ -77,6 +77,29 @@ public class StartPresenterImpl implements StartPresenter {
         return new StartEventsHandler(this);
     }
 
+    @Override
+    public void notifyStartViewOfChordsUploadingToDbStarted() {
+        getStartView().initInflatedView();
+    }
+
+    @Override
+    public void notifyStartViewOfSingleChordHasBeenUploadedToDb(final String unpackedChordTitle) {
+        getStartView().updateUnpackingChordsText(unpackedChordTitle);
+        getStartView().increaseChordsUnPackingProgressBarProgress();
+
+    }
+
+    @Override
+    public void notifyStartViewOfAllTheChordsWereUploadedToDb() {
+        getStartView().getSharedPreferences().edit().putBoolean(Constants.CHORDS_WERE_UPLOADED_TO_DB_NARKER, true).apply();
+        getStartView().setStartButtonEnabledAfterChordsWereUploadedToDb();
+    }
+
+    @Override
+    public void notifyStartViewOfChordsToBeUploadedCount(int count) {
+        Log.i(TAG, "notifyStartViewOfChordsToBeUploadedCount");
+        getStartView().initChordsUnpackingProgressBarMax(count);
+    }
 
     private StartView getStartView() {
         return mStartView;

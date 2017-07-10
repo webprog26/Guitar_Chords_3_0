@@ -77,6 +77,8 @@ public class StartEventsHandler extends EventsHandler {
         }
 
         if(chords != null && chords.size() > 0){
+            getStartPresenter().notifyStartViewOfChordsUploadingToDbStarted();
+            getStartPresenter().notifyStartViewOfChordsToBeUploadedCount(chords.size());
             getStartPresenter().addChordsToLocalDb(chords);
         }
 
@@ -85,11 +87,13 @@ public class StartEventsHandler extends EventsHandler {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onSingleChordLoadedToLocalDBEvent(SingleChordLoadedToLocalDBEvent singleChordLoadedToLocalDBEvent){
         Log.i(TAG, singleChordLoadedToLocalDBEvent.getChordTitle() + " added to local db");
+        getStartPresenter().notifyStartViewOfSingleChordHasBeenUploadedToDb(singleChordLoadedToLocalDBEvent.getChordTitle());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onChordsUploadedToDatabaseEvent(ChordsUploadedToDatabaseEvent chordsUploadedToDatabaseEvent){
-        Log.i(TAG, "All th chords uploaded to local db");
+        Log.i(TAG, "All the chords uploaded to local db");
+        getStartPresenter().notifyStartViewOfAllTheChordsWereUploadedToDb();
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)

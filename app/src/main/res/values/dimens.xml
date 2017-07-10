@@ -7,4 +7,16 @@
     <dimen name="start_app_logo_width">40dp</dimen>
     <dimen name="start_app_logo_height">40dp</dimen>
 
+
+    <dimen name="small_margin_horizontal">8dp</dimen>
+    <dimen name="small_margin_vertical">8dp</dimen>
+
+    <dimen name="string_width">2dp</dimen>
+    <dimen name="single_string_layout_width">36dp</dimen>
+    <dimen name="single_string_layout_height">60dp</dimen>
+    <dimen name="fret_number_layot_width">60dp</dimen>
+    <dimen name="muted_strings_layout_height">30dp</dimen>
+
+    <dimen name="muted_string_layout_height">60dp</dimen>
+
 </resources>
