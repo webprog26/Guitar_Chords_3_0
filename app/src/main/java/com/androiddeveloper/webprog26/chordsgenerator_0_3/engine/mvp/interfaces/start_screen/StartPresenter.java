@@ -1,12 +1,10 @@
-package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp;
+package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.start_screen;
 
-import android.content.Intent;
-import android.content.res.AssetManager;
 import android.support.annotation.NonNull;
 
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.EventsHandler;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.StartEventsHandler;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.Chord;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.EventsSubscriber;
 
 import java.util.ArrayList;
 
@@ -14,11 +12,9 @@ import java.util.ArrayList;
  * Created by webprog on 06.07.17.
  */
 
-public interface StartPresenter {
+public interface StartPresenter extends EventsSubscriber{
 
     void setView(StartView startView);
-    void onStart();
-    void onStop();
     void readJSON(final StartView startView);
     void setSharedPreferencesMarkerJSONStringHasBeenRead();
     void convertJSONtoPOJOs(final String jsonString);

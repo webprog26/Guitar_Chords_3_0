@@ -1,4 +1,4 @@
-package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp;
+package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.start_screen;
 
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;

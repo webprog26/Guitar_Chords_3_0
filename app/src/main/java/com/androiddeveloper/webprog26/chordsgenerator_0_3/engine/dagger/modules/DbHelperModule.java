@@ -3,7 +3,7 @@ package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.dagger.modules
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.ChordsDBHelper;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.helpers.ChordsDBHelper;
 
 import javax.inject.Singleton;
 

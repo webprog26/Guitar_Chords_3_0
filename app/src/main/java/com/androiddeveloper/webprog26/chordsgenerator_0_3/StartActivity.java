@@ -16,8 +16,8 @@ import android.widget.TextView;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.App;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.constants.Constants;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.dagger.modules.StartPresenterModule;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.StartPresenter;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.StartView;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.start_screen.StartPresenter;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.start_screen.StartView;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.services.REadJSONService;
 
 import javax.inject.Inject;
@@ -49,16 +49,15 @@ public class StartActivity extends BaseActvity implements StartView{
         setContentView(R.layout.activity_start);
         ButterKnife.bind(this);
 
-        mStartPresenter.setView(this);
+        getStartPresenter().setView(this);
 
         getBtnStart().setEnabled(getSharedPreferences().getBoolean(Constants.CHORDS_WERE_UPLOADED_TO_DB_NARKER, false));
 
         getBtnStart().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSharedPreferences().edit()
-                        .remove(Constants.JSON_STRING_HAS_BEEN_READ_MARKER)
-                        .apply();
+               startActivity(new Intent(StartActivity.this, MainActivity.class));
+               finish();
             }
         });
     }

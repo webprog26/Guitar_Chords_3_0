@@ -10,5 +10,5 @@ import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordSha
 
 public interface ChordShapeInserter {
 
-    void insertChordShape(final String shapesTableTitle, final ChordShape chordShape, SQLiteOpenHelper sqLiteOpenHelper);
+    long insertChordShape(final String shapesTableTitle, final ChordShape chordShape, SQLiteOpenHelper sqLiteOpenHelper);
 }

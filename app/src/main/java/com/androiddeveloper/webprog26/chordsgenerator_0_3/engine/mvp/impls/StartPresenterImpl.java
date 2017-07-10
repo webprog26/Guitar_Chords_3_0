@@ -8,8 +8,8 @@ import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.commands.Upload
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.constants.Constants;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.StartEventsHandler;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.Chord;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.StartPresenter;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.StartView;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.start_screen.StartPresenter;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.start_screen.StartView;
 import java.util.ArrayList;
 
 

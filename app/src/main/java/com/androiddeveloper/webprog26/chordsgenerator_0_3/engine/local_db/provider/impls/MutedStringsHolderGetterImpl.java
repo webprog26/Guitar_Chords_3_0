@@ -2,7 +2,7 @@ package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.provi
 
 import android.database.Cursor;
 
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.ChordsDBHelper;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.helpers.ChordsDBHelper;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.MutedStringsHolder;
 
 /**

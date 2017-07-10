@@ -2,8 +2,9 @@ package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.provi
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.ChordsDBHelper;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.helpers.ChordsDBHelper;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.provider.interfaces.ChordShapeInserter;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.provider.interfaces.NotesArrayToStringConverter;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordShape;
@@ -15,10 +16,13 @@ import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.MutedStr
 
 public class ChordShapeInserterImpl implements ChordShapeInserter {
 
+    private static final String TAG = "ChordShapeInserter";
+
     private final NotesArrayToStringConverter notesArrayToStringConverter = new NotesArrayToStringConverterImpl();
 
     @Override
-    public void insertChordShape(String shapesTableTitle, ChordShape chordShape, SQLiteOpenHelper sqLiteOpenHelper) {
+    public long insertChordShape(String shapesTableTitle, ChordShape chordShape, SQLiteOpenHelper sqLiteOpenHelper) {
+        Log.i(TAG, chordShape.toString());
         int startBarPlace = ChordShape.NO_BAR_PLACE;
         int endBarPlace = ChordShape.NO_BAR_PLACE;
 
@@ -57,6 +61,6 @@ public class ChordShapeInserterImpl implements ChordShapeInserter {
         contentValues.put(ChordsDBHelper.SHAPE_BAR_START_PLACE, startBarPlace);
         contentValues.put(ChordsDBHelper.SHAPE_BAR_END_PLACE, endBarPlace);
 
-        sqLiteOpenHelper.getWritableDatabase().insert(shapesTableTitle, null, contentValues);
+        return sqLiteOpenHelper.getWritableDatabase().insert(shapesTableTitle, null, contentValues);
     }
 }

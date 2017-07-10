@@ -2,6 +2,8 @@ package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus;
 
 import android.util.Log;
 
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.EventsSubscriber;
+
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -11,6 +13,16 @@ import org.greenrobot.eventbus.EventBus;
 public abstract class EventsHandler implements Subscriber{
 
     private static final String TAG = "EventsHandler";
+
+    private final EventsSubscriber mEventsSubscriber;
+
+    public EventsHandler(EventsSubscriber eventsSubscriber) {
+        this.mEventsSubscriber = eventsSubscriber;
+    }
+
+    protected EventsSubscriber getEventsSubscriber() {
+        return mEventsSubscriber;
+    }
 
     @Override
     public void subscribe() {

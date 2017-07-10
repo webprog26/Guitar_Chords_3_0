@@ -1,8 +1,10 @@
-package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db;
+package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.helpers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import static com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.constants.Constants.C_MAJ_ORDINARY_SHAPES;
 
 /**
  * Creates local database
@@ -20,9 +22,6 @@ public class ChordsDBHelper extends SQLiteOpenHelper {
     public static final String CHORD_TYPE = "chord_type";
     public static final String CHORD_ALTERATION = "chord_alteration";
     public static final String CHORD_SHAPES_TABLE_NAME = "chord_shapes_table_name";
-
-    //Chords shapes tables titles
-    private static final String C_MAJ_ORDINARY_SHAPES = "c_maj_ordinary";
 
     //Chord shape table columns
     public static final String SHAPE_ID = "_id";

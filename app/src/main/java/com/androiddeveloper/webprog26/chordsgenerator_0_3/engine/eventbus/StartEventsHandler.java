@@ -12,7 +12,8 @@ import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.provider.interfaces.DbProvider;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.Chord;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordShape;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.StartPresenter;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.EventsSubscriber;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.start_screen.StartPresenter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -30,18 +31,16 @@ public class StartEventsHandler extends EventsHandler {
 
     private static final String TAG = "StartEventsHandler";
 
-    private final StartPresenter mStartPresenter;
-
     @Inject
     DbProvider dbProvider;
 
     public StartEventsHandler(StartPresenter startPresenter) {
-        this.mStartPresenter = startPresenter;
+        super(startPresenter);
         App.getAppComponent().inject(this);
     }
 
     private StartPresenter getStartPresenter() {
-        return mStartPresenter;
+        return (StartPresenter) getEventsSubscriber();
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)

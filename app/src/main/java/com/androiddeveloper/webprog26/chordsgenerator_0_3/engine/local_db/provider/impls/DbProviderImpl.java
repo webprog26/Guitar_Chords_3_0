@@ -6,7 +6,7 @@ import android.util.Log;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.App;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.ChordsUploadedToDatabaseEvent;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.SingleChordLoadedToLocalDBEvent;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.ChordsDBHelper;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.helpers.ChordsDBHelper;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.provider.interfaces.ChordInserter;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.provider.interfaces.DbProvider;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.provider.interfaces.NoteFromJsonObjectGetter;
@@ -48,7 +48,14 @@ public class DbProviderImpl implements DbProvider {
         ChordsDBHelper chordsDBHelper = getChordsDBHelper();
 
         for(Chord chord: chords){
-            if(chordInserter.insertChord(chord, chordsDBHelper) == -1){
+            long result = chordInserter.insertChord(chord, chordsDBHelper);
+            Log.i(TAG, "result = " + result);
+
+            for(ChordShape chordShape: chord.getChordShapes()){
+                Log.i(TAG, chordShape.toString());
+            }
+
+            if(result == -1){
 
                 throw new Exception("Something went wrong while uploading chord " + chord.getChordTitle() + " to local db");
             }
@@ -65,10 +72,13 @@ public class DbProviderImpl implements DbProvider {
 
     @Override
     public ArrayList<ChordShape> getChordShapes(String chordShapesTableTitle) {
+
+        Log.i(TAG, "getChordShapes()");
+
         ArrayList<ChordShape> chordShapes = new ArrayList<>();
         ChordShape chordShape;
 
-        MutedStringsHolderGetter mutedStringsHolderGetter  =new MutedStringsHolderGetterImpl();
+        MutedStringsHolderGetter mutedStringsHolderGetter = new MutedStringsHolderGetterImpl();
 
         Cursor cursor = getChordsDBHelper().getReadableDatabase().query(chordShapesTableTitle,
                 null,
@@ -77,6 +87,9 @@ public class DbProviderImpl implements DbProvider {
                 null,
                 null,
                 ChordsDBHelper.SHAPE_ID);
+
+        Log.i(TAG, "cursor.getCount() " + cursor.getCount());
+
         while(cursor.moveToNext()){
             boolean hasBar = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(ChordsDBHelper.SHAPE_HAS_BAR)));
             int shapePosition = cursor.getInt(cursor.getColumnIndex(ChordsDBHelper.SHAPE_POSITION));
@@ -101,7 +114,7 @@ public class DbProviderImpl implements DbProvider {
                     barEndPlace
 
             );
-
+            Log.i(TAG, chordShape.toString());
             chordShapes.add(chordShape);
         }
         cursor.close();
