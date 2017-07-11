@@ -1,5 +1,8 @@
 package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen;
 
+import android.content.res.AssetManager;
+import android.support.annotation.NonNull;
+
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordShape;
 
 import java.util.ArrayList;
@@ -10,5 +13,8 @@ import java.util.ArrayList;
 
 public interface MainView {
 
+    @NonNull
+    AssetManager getAssetManager();
+    void initChordShapesRecyclerView();
     void updateRecyclerViewAdapterWithNewChordShapes(final ArrayList<ChordShape> chordShapes);
 }

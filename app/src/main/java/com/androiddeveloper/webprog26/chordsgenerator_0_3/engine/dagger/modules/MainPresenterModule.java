@@ -1,7 +1,9 @@
 package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.dagger.modules;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.adapters.ChordShapesRecyclerViewAdapter;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.dagger.scopes.ActivityScope;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.impls.MainPresenterImpl;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen.MainPresenter;
@@ -15,10 +17,27 @@ import dagger.Provides;
 @Module
 public class MainPresenterModule {
 
+    private final Context context;
+
+    public MainPresenterModule(Context context) {
+        this.context = context;
+    }
+
+    private Context getContext() {
+        return context;
+    }
+
     @Provides
     @NonNull
     @ActivityScope
     MainPresenter provideMainPresenter(){
         return new MainPresenterImpl();
+    }
+
+    @Provides
+    @NonNull
+    @ActivityScope
+    ChordShapesRecyclerViewAdapter provideChordShapesRecyclerViewAdapter(){
+        return new ChordShapesRecyclerViewAdapter(getContext());
     }
 }

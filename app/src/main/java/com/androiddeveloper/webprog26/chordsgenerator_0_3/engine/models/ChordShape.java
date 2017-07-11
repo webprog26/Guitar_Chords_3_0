@@ -1,5 +1,7 @@
 package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -16,6 +18,7 @@ public class ChordShape implements Serializable {
     private final String mImageTitle;
     private final ArrayList<Note> mNotes;
     private final boolean mHasMutedStrings;
+    private Bitmap mChordShapeBitmap;
     private final MutedStringsHolder mMutedStringsHolder;
     private final boolean mHasBar;
     private final int mStartBarPlace;
@@ -75,6 +78,14 @@ public class ChordShape implements Serializable {
 
     public int getEndBarPlace() {
         return mEndBarPlace;
+    }
+
+    public Bitmap getChordShapeBitmap() {
+        return mChordShapeBitmap;
+    }
+
+    public void setChordShapeBitmap(Bitmap chordShapeBitmap) {
+        this.mChordShapeBitmap = chordShapeBitmap;
     }
 
     @Override

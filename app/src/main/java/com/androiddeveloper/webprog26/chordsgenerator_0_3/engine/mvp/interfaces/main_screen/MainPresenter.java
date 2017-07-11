@@ -1,5 +1,6 @@
 package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen;
 
+import android.content.res.AssetManager;
 import android.support.annotation.NonNull;
 
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.MainEventsHandler;
@@ -19,4 +20,6 @@ public interface MainPresenter extends EventsSubscriber{
     MainEventsHandler getEventsHandler();
     void loadCurrentChordShapes(final String chordTitle);
     void notifyMainViewOfNewChordShapesHasBeenLoaded(final ArrayList<ChordShape> chordShapes);
+    @NonNull
+    AssetManager getAssetManager();
 }

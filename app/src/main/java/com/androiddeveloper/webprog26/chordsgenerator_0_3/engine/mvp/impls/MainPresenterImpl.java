@@ -1,5 +1,6 @@
 package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.impls;
 
+import android.content.res.AssetManager;
 import android.support.annotation.NonNull;
 
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.commands.LoadChordShapesFromLocalDbCommand;
@@ -41,6 +42,12 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void notifyMainViewOfNewChordShapesHasBeenLoaded(ArrayList<ChordShape> chordShapes) {
         getMainView().updateRecyclerViewAdapterWithNewChordShapes(chordShapes);
+    }
+
+    @NonNull
+    @Override
+    public AssetManager getAssetManager() {
+        return getMainView().getAssetManager();
     }
 
     @NonNull
