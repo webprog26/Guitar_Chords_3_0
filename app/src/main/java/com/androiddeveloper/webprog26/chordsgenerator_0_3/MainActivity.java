@@ -1,15 +1,21 @@
 package com.androiddeveloper.webprog26.chordsgenerator_0_3;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.App;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.dagger.modules.MainPresenterModule;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordShape;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen.MainPresenter;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen.MainView;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActvity implements MainView{
+
+    private static final String TAG = "MainView";
 
     private static final String C_MAJOR = "C";
 
@@ -45,6 +51,13 @@ public class MainActivity extends BaseActvity implements MainView{
     @Override
     protected void setupActivityComponent() {
         App.getAppComponent().plus(new MainPresenterModule()).inject(this);
+    }
+
+    @Override
+    public void updateRecyclerViewAdapterWithNewChordShapes(ArrayList<ChordShape> chordShapes) {
+        for(ChordShape chordShape: chordShapes){
+            Log.i(TAG, chordShape.toString());
+        }
     }
 
     private MainPresenter getMainPresenter() {
