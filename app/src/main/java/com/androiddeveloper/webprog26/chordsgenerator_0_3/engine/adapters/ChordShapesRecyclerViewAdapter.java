@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.R;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.constants.Constants;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordShape;
 
 import java.util.ArrayList;
@@ -31,11 +32,13 @@ implements DataUpdater {
     private static final String TAG = "DataUpdater";
 
     private final Context mContext;
+    private final View.OnClickListener onClickListener;
     private ArrayList<ChordShape> mChordShapes = new ArrayList<>();
 
     @Inject
-    public ChordShapesRecyclerViewAdapter(Context context) {
+    public ChordShapesRecyclerViewAdapter(Context context, View.OnClickListener onClickListener) {
         this.mContext = context;
+        this.onClickListener = onClickListener;
     }
 
     @Override
@@ -66,8 +69,12 @@ implements DataUpdater {
         return mContext;
     }
 
-    public ArrayList<ChordShape> getChordShapes() {
+    private ArrayList<ChordShape> getChordShapes() {
         return mChordShapes;
+    }
+
+    private View.OnClickListener getOnClickListener() {
+        return onClickListener;
     }
 
     @Override
@@ -106,6 +113,9 @@ implements DataUpdater {
                 getIvChordShape().setImageBitmap(chordShapeBitmap);
 
             }
+
+            getCvChordShape().setTag(getAdapterPosition());
+            getCvChordShape().setOnClickListener(getOnClickListener());
         }
 
         private CardView getCvChordShape() {

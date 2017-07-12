@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.App;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.adapters.ChordShapesRecyclerViewAdapter;
@@ -70,7 +71,7 @@ public class MainActivity extends BaseActvity implements MainView{
 
     @Override
     protected void setupActivityComponent() {
-        App.getAppComponent().plus(new MainPresenterModule(this)).inject(this);
+        App.getAppComponent().plus(new MainPresenterModule(this, this)).inject(this);
     }
 
     @NonNull
@@ -114,7 +115,12 @@ public class MainActivity extends BaseActvity implements MainView{
     }
 
     @NonNull
-    RecyclerView getRvChordShapes(){
+    private RecyclerView getRvChordShapes(){
         return mRvChordShapes;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.i(TAG, "clicked item position is " + (int)v.getTag());
     }
 }
