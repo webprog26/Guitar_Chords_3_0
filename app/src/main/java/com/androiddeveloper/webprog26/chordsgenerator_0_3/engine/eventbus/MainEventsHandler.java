@@ -1,14 +1,14 @@
 package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.App;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.ChordShapesHasBeenLoadedEvent;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.ChordShapesImagesHasBeenLoadedEvent;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.LoadChordShapesBitmapsEvent;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.LoadChordShapesFromLocalDbEvent;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.helpers.LoadBitmapsFromAssetsHelper;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.provider.interfaces.DbProvider;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordShape;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen.MainPresenter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -50,27 +50,28 @@ public class MainEventsHandler extends EventsHandler {
         Log.i(TAG, "size = " + getDbProvider().getChordShapes(loadChordShapesFromLocalDbEvent.getChordShapesTableName()).size());
 
         EventBus.getDefault().post(new LoadChordShapesBitmapsEvent(getDbProvider()
-                        .getChordShapes(loadChordShapesFromLocalDbEvent.getChordShapesTableName())));
+                        .getChordShapesImagesTitlesList(loadChordShapesFromLocalDbEvent.getChordShapesTableName())));
 
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onLoadChordShapesBitmapsEvent(LoadChordShapesBitmapsEvent loadChordShapesBitmapsEvent){
 
-        ArrayList<ChordShape> chordShapes = loadChordShapesBitmapsEvent.getChordShapes();
+        ArrayList<String> chordShapesImagesTitles = loadChordShapesBitmapsEvent.getChordShapesImagesTitles();
+        ArrayList<Bitmap> chordShapesImages = new ArrayList<>();
 
-        if(chordShapes != null && chordShapes.size() > 0){
+        if(chordShapesImagesTitles != null && chordShapesImagesTitles.size() > 0){
 
-            for(ChordShape chordShape: chordShapes){
-                chordShape.setChordShapeBitmap(LoadBitmapsFromAssetsHelper.loadBitmapFromAssets(getMainPresenter().getAssetManager(), chordShape.getImageTitle()));
+            for(String chordShapeImageTitle: chordShapesImagesTitles){
+                chordShapesImages.add(LoadBitmapsFromAssetsHelper.loadBitmapFromAssets(getMainPresenter().getAssetManager(), chordShapeImageTitle));
             }
 
-                    EventBus.getDefault().post(new ChordShapesHasBeenLoadedEvent(chordShapes));
+                    EventBus.getDefault().post(new ChordShapesImagesHasBeenLoadedEvent(chordShapesImages));
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onChordShapesHasBeenLoadedEvent(ChordShapesHasBeenLoadedEvent chordShapesHasBeenLoadedEvent){
-        getMainPresenter().notifyMainViewOfNewChordShapesHasBeenLoaded(chordShapesHasBeenLoadedEvent.getChordShapes());
+    public void onChordShapesHasBeenLoadedEvent(ChordShapesImagesHasBeenLoadedEvent chordShapesImagesHasBeenLoadedEvent){
+        getMainPresenter().notifyMainViewOfNewChordShapesImagesHasBeenLoaded(chordShapesImagesHasBeenLoadedEvent.getChordShapesImages());
     }
 }

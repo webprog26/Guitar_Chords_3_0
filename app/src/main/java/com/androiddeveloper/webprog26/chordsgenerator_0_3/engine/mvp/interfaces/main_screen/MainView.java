@@ -1,10 +1,9 @@
 package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen;
 
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.view.View;
-
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordShape;
 
 import java.util.ArrayList;
 
@@ -17,7 +16,7 @@ public interface MainView extends View.OnClickListener{
     @NonNull
     AssetManager getAssetManager();
     void initChordShapesRecyclerView();
-    void updateRecyclerViewAdapterWithNewChordShapes(final ArrayList<ChordShape> chordShapes);
+    void updateRecyclerViewAdapterWithNewChordShapesImages(final ArrayList<Bitmap> chordShapesImages);
 
     @Override
     void onClick(View v);

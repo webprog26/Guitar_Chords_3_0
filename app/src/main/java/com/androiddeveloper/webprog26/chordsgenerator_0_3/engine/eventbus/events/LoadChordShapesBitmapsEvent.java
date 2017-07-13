@@ -1,7 +1,5 @@
 package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events;
 
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordShape;
-
 import java.util.ArrayList;
 
 /**
@@ -10,13 +8,13 @@ import java.util.ArrayList;
 
 public class LoadChordShapesBitmapsEvent {
 
-    private final ArrayList<ChordShape> chordShapes;
+    private final ArrayList<String> chordShapesImagesTitles;
 
-    public LoadChordShapesBitmapsEvent(ArrayList<ChordShape> chordShapes) {
-        this.chordShapes = chordShapes;
+    public LoadChordShapesBitmapsEvent(ArrayList<String> chordShapesImagesTitles) {
+        this.chordShapesImagesTitles = chordShapesImagesTitles;
     }
 
-    public ArrayList<ChordShape> getChordShapes() {
-        return chordShapes;
+    public ArrayList<String> getChordShapesImagesTitles() {
+        return chordShapesImagesTitles;
     }
 }

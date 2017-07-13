@@ -13,7 +13,6 @@ import android.view.View;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.App;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.adapters.ChordShapesRecyclerViewAdapter;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.dagger.modules.MainPresenterModule;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordShape;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen.MainPresenter;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen.MainView;
 
@@ -90,10 +89,8 @@ public class MainActivity extends BaseActvity implements MainView{
     }
 
     @Override
-    public void updateRecyclerViewAdapterWithNewChordShapes(ArrayList<ChordShape> chordShapes) {
-        for(ChordShape chordShape: chordShapes){
-
-            Bitmap chordShapeBitmap = chordShape.getChordShapeBitmap();
+    public void updateRecyclerViewAdapterWithNewChordShapesImages(ArrayList<Bitmap> chordShapesImages) {
+        for(Bitmap chordShapeBitmap: chordShapesImages){
 
             if(chordShapeBitmap != null){
                 Log.i(TAG, chordShapeBitmap.toString());
@@ -101,7 +98,7 @@ public class MainActivity extends BaseActvity implements MainView{
                 Log.i(TAG, "chordShapeBitmap is null");
             }
         }
-        getChordShapesRecyclerViewAdapter().updateData(chordShapes);
+        getChordShapesRecyclerViewAdapter().updateData(chordShapesImages);
     }
 
     @NonNull
