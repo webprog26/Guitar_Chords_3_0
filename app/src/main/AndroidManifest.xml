@@ -25,7 +25,8 @@
             android:exported="false" />
 
         <activity android:name=".MainActivity" />
-        <activity android:name=".PlayShapesActivity"></activity>
+        <activity android:name=".PlayShapesActivity"
+            android:launchMode="singleTop"></activity>
     </application>
 
 </manifest>

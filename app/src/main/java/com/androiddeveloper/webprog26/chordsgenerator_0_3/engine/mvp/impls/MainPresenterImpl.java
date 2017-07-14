@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.commands.LoadChordShapesImagesFromLocalDbCommand;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.EventsHandler;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.MainEventsHandler;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen.MainPresenter;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen.MainView;
@@ -18,6 +19,12 @@ import java.util.ArrayList;
 public class MainPresenterImpl implements MainPresenter {
 
     private MainView mainView;
+    private EventsHandler mainEventsHandler;
+
+    @Override
+    public void setEventsHandler() {
+        this.mainEventsHandler = new MainEventsHandler(this);
+    }
 
     @Override
     public void onStart() {
@@ -52,8 +59,8 @@ public class MainPresenterImpl implements MainPresenter {
 
     @NonNull
     @Override
-    public MainEventsHandler getEventsHandler() {
-        return new MainEventsHandler(this);
+    public EventsHandler getEventsHandler() {
+        return mainEventsHandler;
     }
 
     private MainView getMainView() {

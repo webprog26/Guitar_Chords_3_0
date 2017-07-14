@@ -6,9 +6,10 @@ import android.util.Log;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.App;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.commands.LoadFullChordShapesFromLocalDbCommand;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.dagger.modules.LoadedChordShapesHolderModule;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.EventsHandler;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.PlayEventsHandler;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordShape;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.LoadedChordShapesHolder;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.LoadedChordShapesHolderImpl;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.play_screen.PlayPresenter;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.play_screen.PlayView;
 
@@ -23,12 +24,19 @@ public class PlayPresenterImpl implements PlayPresenter {
     private static final String TAG = "PlayPresenter";
 
     private PlayView mPlayView;
+    private PlayEventsHandler playEventsHandler;
+
 
     @Inject
-    LoadedChordShapesHolder mLoadedChordShapesHolder;
+    LoadedChordShapesHolderImpl mLoadedChordShapesHolderImpl;
 
     public PlayPresenterImpl() {
         App.getAppComponent().plus(new LoadedChordShapesHolderModule()).inject(this);
+    }
+
+    @Override
+    public void setEventsHandler() {
+        this.playEventsHandler = new PlayEventsHandler(this);
     }
 
     @Override
@@ -38,6 +46,7 @@ public class PlayPresenterImpl implements PlayPresenter {
 
     @Override
     public void onStop() {
+        clearLoadedChordShapesHolder();
         getEventsHandler().unsubscribe();
     }
 
@@ -48,12 +57,13 @@ public class PlayPresenterImpl implements PlayPresenter {
 
     @NonNull
     @Override
-    public PlayEventsHandler getEventsHandler() {
-        return new PlayEventsHandler(this);
+    public EventsHandler getEventsHandler() {
+        return playEventsHandler;
     }
 
     @Override
     public void loadChordShapesFromLocalDataBase(String chordTitle) {
+        Log.i(TAG, "loadChordShapesFromLocalDataBase");
 
         if(chordTitle != null){
             new LoadFullChordShapesFromLocalDbCommand(chordTitle).execute();
@@ -62,6 +72,7 @@ public class PlayPresenterImpl implements PlayPresenter {
 
     @Override
     public void showCurrentChordShape(int currentShapePosition) {
+        Log.i(TAG, "showCurrentChordShape");
         final ChordShape currentChordShape = getLoadedChordShapesHolder().getChordShape(currentShapePosition);
 
         if(currentChordShape != null){
@@ -77,12 +88,17 @@ public class PlayPresenterImpl implements PlayPresenter {
 
     @NonNull
     @Override
-    public LoadedChordShapesHolder getLoadedChordShapesHolder() {
-        return mLoadedChordShapesHolder;
+    public LoadedChordShapesHolderImpl getLoadedChordShapesHolder() {
+        return mLoadedChordShapesHolderImpl;
     }
 
     @Override
     public void notifyPlayViewOfFullChordShapesHaveBeenLoaded() {
         getPlayView().forcePlayPresenterToshowCurrentChordShape();
+    }
+
+    @Override
+    public void clearLoadedChordShapesHolder() {
+        getLoadedChordShapesHolder().clearChordShapesList();
     }
 }

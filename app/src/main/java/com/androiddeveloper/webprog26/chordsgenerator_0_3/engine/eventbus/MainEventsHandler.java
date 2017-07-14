@@ -74,4 +74,5 @@ public class MainEventsHandler extends EventsHandler {
     public void onChordShapesHasBeenLoadedEvent(ChordShapesImagesHasBeenLoadedEvent chordShapesImagesHasBeenLoadedEvent){
         getMainPresenter().notifyMainViewOfNewChordShapesImagesHasBeenLoaded(chordShapesImagesHasBeenLoadedEvent.getChordShapesImages());
     }
+
 }

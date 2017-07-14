@@ -15,7 +15,6 @@ import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.PlayEv
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.StartEventsHandler;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.MainEventsHandler;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.provider.impls.DbProviderImpl;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.LoadedChordShapesHolder;
 
 import javax.inject.Singleton;
 

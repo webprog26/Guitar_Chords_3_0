@@ -13,6 +13,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 /**
@@ -31,18 +33,23 @@ public class PlayEventsHandler extends EventsHandler {
         App.getAppComponent().inject(this);
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onLoadFullChordShapesFromLocalDbEvent(LoadFullChordShapesFromLocalDbEvent loadFullChordShapesFromLocalDbEvent){
-        EventBus.getDefault().post(new FullChordShapesLoadedFromLocalDbEvent(getDbProvider().getChordShapes(loadFullChordShapesFromLocalDbEvent.getChordShapesTableName())));
-    }
+        Log.i(TAG, "onLoadFullChordShapesFromLocalDbEvent");
+        ArrayList<ChordShape> chordShapes = getDbProvider().getChordShapes(loadFullChordShapesFromLocalDbEvent.getChordShapesTableName());
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onFullChordShapesLoadedFromLocalDbEvent(FullChordShapesLoadedFromLocalDbEvent fullChordShapesLoadedFromLocalDbEvent){
-        for(final ChordShape chordShape: fullChordShapesLoadedFromLocalDbEvent.getChordShapes()){
+
+        for(final ChordShape chordShape: chordShapes){
             getPlayPresenter().getLoadedChordShapesHolder().addChordShape(chordShape);
         }
         getPlayPresenter().notifyPlayViewOfFullChordShapesHaveBeenLoaded();
     }
+
+//    @Subscribe(threadMode = ThreadMode.POSTING)
+//    public void onFullChordShapesLoadedFromLocalDbEvent(FullChordShapesLoadedFromLocalDbEvent fullChordShapesLoadedFromLocalDbEvent){
+//        Log.i(TAG, "onFullChordShapesLoadedFromLocalDbEvent");
+//
+//    }
 
     private DbProvider getDbProvider() {
         return mDbProvider;
@@ -51,4 +58,5 @@ public class PlayEventsHandler extends EventsHandler {
     private PlayPresenter getPlayPresenter(){
         return (PlayPresenter) getEventsSubscriber();
     }
+
 }

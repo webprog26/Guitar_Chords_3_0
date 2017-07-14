@@ -2,8 +2,8 @@ package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces
 
 import android.support.annotation.NonNull;
 
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.PlayEventsHandler;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.LoadedChordShapesHolder;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.EventsHandler;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.LoadedChordShapesHolderImpl;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.EventsSubscriber;
 
 /**
@@ -14,10 +14,11 @@ public interface PlayPresenter extends EventsSubscriber{
 
     void setView (PlayView playView);
     @NonNull
-    PlayEventsHandler getEventsHandler();
+    EventsHandler getEventsHandler();
     @NonNull
-    LoadedChordShapesHolder getLoadedChordShapesHolder();
+    LoadedChordShapesHolderImpl getLoadedChordShapesHolder();
     void notifyPlayViewOfFullChordShapesHaveBeenLoaded();
+    void clearLoadedChordShapesHolder();
 
     void loadChordShapesFromLocalDataBase(final String chordTitle);
     void showCurrentChordShape(final int currentShapePosition);

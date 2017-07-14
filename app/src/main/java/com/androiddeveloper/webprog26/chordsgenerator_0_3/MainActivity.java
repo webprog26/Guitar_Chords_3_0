@@ -49,6 +49,7 @@ public class MainActivity extends BaseActvity implements MainView{
         ButterKnife.bind(this);
 
         getMainPresenter().setView(this);
+        getMainPresenter().setEventsHandler();
 
         initChordShapesRecyclerView();
     }

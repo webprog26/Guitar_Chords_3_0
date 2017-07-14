@@ -26,7 +26,10 @@ public abstract class EventsHandler implements Subscriber{
 
     @Override
     public void subscribe() {
-        EventBus.getDefault().register(this);
+
+        if(!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
