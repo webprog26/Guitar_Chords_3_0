@@ -4,7 +4,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.commands.LoadChordShapesFromLocalDbCommand;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.commands.LoadChordShapesImagesFromLocalDbCommand;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.MainEventsHandler;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen.MainPresenter;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen.MainView;
@@ -36,7 +36,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void loadCurrentChordShapes(String chordTitle) {
-        new LoadChordShapesFromLocalDbCommand(chordTitle).execute();
+        new LoadChordShapesImagesFromLocalDbCommand(chordTitle).execute();
     }
 
     @Override

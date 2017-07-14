@@ -22,6 +22,6 @@ public class Constants {
 
     public static final String CLICKED_CHORD_SHAPE_POSITION_TAG = "clicked_chord_shape_position_tag";
 
-
+    public static final String CURRENT_CHORD_AND_SHAPE_POSITION_INFO = "current_chord_and_shape_position_info";
 
 }

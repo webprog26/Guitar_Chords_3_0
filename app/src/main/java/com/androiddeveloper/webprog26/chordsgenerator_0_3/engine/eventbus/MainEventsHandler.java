@@ -6,7 +6,7 @@ import android.util.Log;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.App;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.ChordShapesImagesHasBeenLoadedEvent;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.LoadChordShapesBitmapsEvent;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.LoadChordShapesFromLocalDbEvent;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.events.LoadChordShapesImagesFromLocalDbEvent;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.helpers.LoadBitmapsFromAssetsHelper;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.provider.interfaces.DbProvider;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen.MainPresenter;
@@ -44,13 +44,13 @@ public class MainEventsHandler extends EventsHandler {
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
-    public void onLoadChordShapesFromLocalDbEvent(LoadChordShapesFromLocalDbEvent loadChordShapesFromLocalDbEvent){
+    public void onLoadChordShapesFromLocalDbEvent(LoadChordShapesImagesFromLocalDbEvent loadChordShapesImagesFromLocalDbEvent){
         Log.i(TAG, "onLoadChordShapesFromLocalDbEvent");
-        Log.i(TAG, loadChordShapesFromLocalDbEvent.getChordShapesTableName());
-        Log.i(TAG, "size = " + getDbProvider().getChordShapes(loadChordShapesFromLocalDbEvent.getChordShapesTableName()).size());
+        Log.i(TAG, loadChordShapesImagesFromLocalDbEvent.getChordShapesTableName());
+        Log.i(TAG, "size = " + getDbProvider().getChordShapes(loadChordShapesImagesFromLocalDbEvent.getChordShapesTableName()).size());
 
         EventBus.getDefault().post(new LoadChordShapesBitmapsEvent(getDbProvider()
-                        .getChordShapesImagesTitlesList(loadChordShapesFromLocalDbEvent.getChordShapesTableName())));
+                        .getChordShapesImagesTitlesList(loadChordShapesImagesFromLocalDbEvent.getChordShapesTableName())));
 
     }
 
