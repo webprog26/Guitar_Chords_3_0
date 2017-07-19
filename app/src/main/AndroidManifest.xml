@@ -24,8 +24,10 @@
             android:name=".engine.services.REadJSONService"
             android:exported="false" />
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".PlayShapesActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop"></activity>
     </application>
 

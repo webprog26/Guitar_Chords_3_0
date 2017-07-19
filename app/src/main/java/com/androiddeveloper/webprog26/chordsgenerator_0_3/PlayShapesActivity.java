@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.Button;
 
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.App;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.constants.Constants;
@@ -15,6 +17,9 @@ import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class PlayShapesActivity extends BaseActvity implements PlayView{
 
@@ -23,14 +28,25 @@ public class PlayShapesActivity extends BaseActvity implements PlayView{
     @Inject
     PlayPresenter mPlayPresenter;
 
+    @BindView(R.id.btn_next)
+    Button mBtnNextChordShape;
+
+    @BindView(R.id.btn_previous)
+    Button mBtnPreviousChordShape;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_shapes);
 
+        ButterKnife.bind(this);
+
         getPlayPresenter().setView(this);
         getPlayPresenter().setEventsHandler();
+
+        getBtnNextChordShape().setOnClickListener(this);
+        getBtnPreviousChordShape().setOnClickListener(this);
     }
 
     @Override
@@ -110,10 +126,52 @@ public class PlayShapesActivity extends BaseActvity implements PlayView{
         return super.onKeyUp(keyCode, event);
     }
 
+    @Override
+    public void setNextChordShapeButtonEnabled(boolean enabled) {
+        getBtnNextChordShape().setEnabled(enabled);
+    }
 
     @Override
-    public Intent getIntent() {
-        Log.i(TAG, "getIntent");
-        return super.getIntent();
+    public void setPreviousChordShapeButtonEnabled(boolean enabled) {
+        getBtnPreviousChordShape().setEnabled(enabled);
+    }
+
+    private Button getBtnNextChordShape() {
+        return mBtnNextChordShape;
+    }
+
+    private Button getBtnPreviousChordShape() {
+        return mBtnPreviousChordShape;
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        final PlayPresenter playPresenter = getPlayPresenter();
+        final int currentChordShapePosition = playPresenter
+                .getLoadedChordShapesHolder()
+                .getCurrentChordShapePosition();
+
+
+        if(currentChordShapePosition == Constants.UNAVAILABLE_CHORD_SHAPE_POSITION){
+
+            return;
+
+        }
+
+        switch (view.getId()){
+
+            case R.id.btn_next:
+
+                playPresenter.showCurrentChordShape(currentChordShapePosition + 1);
+
+                break;
+
+            case R.id.btn_previous:
+
+                playPresenter.showCurrentChordShape(currentChordShapePosition - 1);
+
+                break;
+        }
     }
 }
