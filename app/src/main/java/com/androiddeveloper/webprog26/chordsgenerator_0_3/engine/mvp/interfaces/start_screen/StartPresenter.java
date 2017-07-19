@@ -2,7 +2,7 @@ package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces
 
 import android.support.annotation.NonNull;
 
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.StartEventsHandler;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.EventsHandler;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.Chord;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.EventsSubscriber;
 
@@ -24,5 +24,5 @@ public interface StartPresenter extends EventsSubscriber{
     void notifyStartViewOfChordsToBeUploadedCount(final int count);
     void addChordsToLocalDb(ArrayList<Chord> chords);
     @NonNull
-    StartEventsHandler getEventsHandler();
+    EventsHandler getEventsHandler();
 }

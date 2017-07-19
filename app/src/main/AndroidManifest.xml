@@ -24,7 +24,9 @@
             android:name=".engine.services.REadJSONService"
             android:exported="false" />
 
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".PlayShapesActivity"
+            android:launchMode="singleTop"></activity>
     </application>
 
 </manifest>

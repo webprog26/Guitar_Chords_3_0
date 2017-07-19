@@ -28,6 +28,8 @@
 
     <dimen name="muted_string_layout_height">60dp</dimen>
 
+    <dimen name="text_primary_size">16dp</dimen>
+
 
 
 </resources>

@@ -20,6 +20,8 @@ public class Constants {
     public static final String SHAPE_NOTE_PLACE = "note_place";
     public static final String SHAPE_NOTE_SOUND_PATH = "note_sound_path";
 
+    public static final String CLICKED_CHORD_SHAPE_POSITION_TAG = "clicked_chord_shape_position_tag";
 
+    public static final String CURRENT_CHORD_AND_SHAPE_POSITION_INFO = "current_chord_and_shape_position_info";
 
 }

@@ -1,5 +1,6 @@
 package com.androiddeveloper.webprog26.chordsgenerator_0_3;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -8,11 +9,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.App;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.adapters.ChordShapesRecyclerViewAdapter;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.constants.Constants;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.dagger.modules.MainPresenterModule;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordShape;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.CurrentChordAndShapePositionInfoContainer;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen.MainPresenter;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.main_screen.MainView;
 
@@ -46,6 +49,7 @@ public class MainActivity extends BaseActvity implements MainView{
         ButterKnife.bind(this);
 
         getMainPresenter().setView(this);
+        getMainPresenter().setEventsHandler();
 
         initChordShapesRecyclerView();
     }
@@ -70,7 +74,7 @@ public class MainActivity extends BaseActvity implements MainView{
 
     @Override
     protected void setupActivityComponent() {
-        App.getAppComponent().plus(new MainPresenterModule(this)).inject(this);
+        App.getAppComponent().plus(new MainPresenterModule(this, this)).inject(this);
     }
 
     @NonNull
@@ -89,10 +93,8 @@ public class MainActivity extends BaseActvity implements MainView{
     }
 
     @Override
-    public void updateRecyclerViewAdapterWithNewChordShapes(ArrayList<ChordShape> chordShapes) {
-        for(ChordShape chordShape: chordShapes){
-
-            Bitmap chordShapeBitmap = chordShape.getChordShapeBitmap();
+    public void updateRecyclerViewAdapterWithNewChordShapesImages(ArrayList<Bitmap> chordShapesImages) {
+        for(Bitmap chordShapeBitmap: chordShapesImages){
 
             if(chordShapeBitmap != null){
                 Log.i(TAG, chordShapeBitmap.toString());
@@ -100,7 +102,7 @@ public class MainActivity extends BaseActvity implements MainView{
                 Log.i(TAG, "chordShapeBitmap is null");
             }
         }
-        getChordShapesRecyclerViewAdapter().updateData(chordShapes);
+        getChordShapesRecyclerViewAdapter().updateData(chordShapesImages);
     }
 
     @NonNull
@@ -114,7 +116,16 @@ public class MainActivity extends BaseActvity implements MainView{
     }
 
     @NonNull
-    RecyclerView getRvChordShapes(){
+    private RecyclerView getRvChordShapes(){
         return mRvChordShapes;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.i(TAG, "clicked item position is " + (int)v.getTag());
+        Intent playShapesActivityIntent = new Intent(this, PlayShapesActivity.class);
+        playShapesActivityIntent.putExtra(Constants.CURRENT_CHORD_AND_SHAPE_POSITION_INFO,
+                new CurrentChordAndShapePositionInfoContainer(C_MAJOR, (int)v.getTag()));
+        startActivity(playShapesActivityIntent);
     }
 }

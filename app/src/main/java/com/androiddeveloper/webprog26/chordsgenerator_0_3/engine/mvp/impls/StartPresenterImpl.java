@@ -6,6 +6,7 @@ import android.util.Log;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.commands.ConvertJSONStringToPOJOsCommand;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.commands.UploadChordsToLocalDbCommand;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.constants.Constants;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.EventsHandler;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.StartEventsHandler;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.Chord;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.mvp.interfaces.start_screen.StartPresenter;
@@ -23,7 +24,12 @@ public class StartPresenterImpl implements StartPresenter {
 
     private StartView mStartView;
 
+    private StartEventsHandler startEventsHandler;
 
+    @Override
+    public void setEventsHandler() {
+        this.startEventsHandler = new StartEventsHandler(this);
+    }
 
     @Override
     public void setView(StartView startView) {
@@ -73,8 +79,8 @@ public class StartPresenterImpl implements StartPresenter {
 
     @NonNull
     @Override
-    public StartEventsHandler getEventsHandler() {
-        return new StartEventsHandler(this);
+    public EventsHandler getEventsHandler() {
+        return startEventsHandler;
     }
 
     @Override

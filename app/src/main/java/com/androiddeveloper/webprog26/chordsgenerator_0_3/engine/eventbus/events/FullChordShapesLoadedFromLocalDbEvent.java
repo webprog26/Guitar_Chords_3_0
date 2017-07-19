@@ -5,14 +5,14 @@ import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordSha
 import java.util.ArrayList;
 
 /**
- * Created by webprog on 11.07.17.
+ * Created by webprog on 14.07.17.
  */
 
-public class ChordShapesHasBeenLoadedEvent {
+public class FullChordShapesLoadedFromLocalDbEvent {
 
-    final ArrayList<ChordShape> chordShapes;
+    private final ArrayList<ChordShape> chordShapes;
 
-    public ChordShapesHasBeenLoadedEvent(ArrayList<ChordShape> chordShapes) {
+    public FullChordShapesLoadedFromLocalDbEvent(ArrayList<ChordShape> chordShapes) {
         this.chordShapes = chordShapes;
     }
 

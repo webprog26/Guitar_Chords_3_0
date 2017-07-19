@@ -1,6 +1,8 @@
 package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.local_db.provider.impls;
 
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.App;
@@ -73,7 +75,7 @@ public class DbProviderImpl implements DbProvider {
     @Override
     public ArrayList<ChordShape> getChordShapes(String chordShapesTableTitle) {
 
-        Log.i(TAG, "getChordShapes()");
+        Log.i(TAG, "getChordShapesImagesTitles()");
 
         ArrayList<ChordShape> chordShapes = new ArrayList<>();
         ChordShape chordShape;
@@ -177,5 +179,20 @@ public class DbProviderImpl implements DbProvider {
             Log.i(TAG, "getNote " + note);
         }
         return notes;
+    }
+
+    @NonNull
+    @Override
+    public ArrayList<String> getChordShapesImagesTitlesList(String chordShapesTableTitle) {
+
+        Cursor cursor = getChordsDBHelper().getReadableDatabase().query(chordShapesTableTitle,
+                null,
+                null,
+                null,
+                null,
+                null,
+                ChordsDBHelper.SHAPE_ID);
+
+        return new ChordShapeImagesTitlesGetterImpl().getChordShapeImagesTitles(cursor);
     }
 }

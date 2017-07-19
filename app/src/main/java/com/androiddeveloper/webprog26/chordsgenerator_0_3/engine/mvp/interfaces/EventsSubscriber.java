@@ -8,4 +8,5 @@ public interface EventsSubscriber {
 
     void onStart();
     void onStop();
+    void setEventsHandler();
 }

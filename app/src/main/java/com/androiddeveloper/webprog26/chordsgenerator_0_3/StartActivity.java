@@ -50,6 +50,7 @@ public class StartActivity extends BaseActvity implements StartView{
         ButterKnife.bind(this);
 
         getStartPresenter().setView(this);
+        getStartPresenter().setEventsHandler();
 
         getBtnStart().setEnabled(getSharedPreferences().getBoolean(Constants.CHORDS_WERE_UPLOADED_TO_DB_NARKER, false));
 

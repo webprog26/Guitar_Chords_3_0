@@ -4,11 +4,11 @@ package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.event
  * Created by webprog on 10.07.17.
  */
 
-public class LoadChordShapesFromLocalDbEvent {
+public class LoadChordShapesImagesFromLocalDbEvent {
 
     private final String mChordShapesTableName;
 
-    public LoadChordShapesFromLocalDbEvent(String chordShapesTableName) {
+    public LoadChordShapesImagesFromLocalDbEvent(String chordShapesTableName) {
         this.mChordShapesTableName = chordShapesTableName;
     }
 

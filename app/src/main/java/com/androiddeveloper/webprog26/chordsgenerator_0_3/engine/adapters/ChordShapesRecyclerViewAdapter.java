@@ -2,7 +2,6 @@ package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.R;
-import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models.ChordShape;
 
 import java.util.ArrayList;
 
@@ -31,11 +29,13 @@ implements DataUpdater {
     private static final String TAG = "DataUpdater";
 
     private final Context mContext;
-    private ArrayList<ChordShape> mChordShapes = new ArrayList<>();
+    private final View.OnClickListener onClickListener;
+    private ArrayList<Bitmap> mChordShapesImages = new ArrayList<>();
 
     @Inject
-    public ChordShapesRecyclerViewAdapter(Context context) {
+    public ChordShapesRecyclerViewAdapter(Context context, View.OnClickListener onClickListener) {
         this.mContext = context;
+        this.onClickListener = onClickListener;
     }
 
     @Override
@@ -48,35 +48,39 @@ implements DataUpdater {
 
     @Override
     public void onBindViewHolder(ChordShapesRecyclerViewViewHolder holder, int position) {
-        final ChordShape chordShape = getChordShapes().get(position);
+        final Bitmap chordShapeBitmap = getChordShapesImages().get(position);
 
-        if(chordShape != null){
+        if(chordShapeBitmap != null){
 
-            holder.bind(chordShape);
+            holder.bind(chordShapeBitmap);
 
         }
     }
 
     @Override
     public int getItemCount() {
-        return getChordShapes().size();
+        return getChordShapesImages().size();
     }
 
     private Context getContext() {
         return mContext;
     }
 
-    public ArrayList<ChordShape> getChordShapes() {
-        return mChordShapes;
+    private ArrayList<Bitmap> getChordShapesImages() {
+        return mChordShapesImages;
+    }
+
+    private View.OnClickListener getOnClickListener() {
+        return onClickListener;
     }
 
     @Override
-    public void updateData(ArrayList<ChordShape> chordShapes) {
-        this.mChordShapes = chordShapes;
+    public void updateData(ArrayList<Bitmap> chordShapesImages) {
+        this.mChordShapesImages = chordShapesImages;
 
-        for(ChordShape chordShape: chordShapes){
+        for(Bitmap chordShapeBitmap: chordShapesImages){
 
-            Log.i(TAG, chordShape.toString());
+            Log.i(TAG, "updateData() " + chordShapeBitmap.toString());
 
         }
 
@@ -96,16 +100,16 @@ implements DataUpdater {
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(final ChordShape chordShape){
-
-            Bitmap chordShapeBitmap = chordShape.getChordShapeBitmap();
+        public void bind(final Bitmap chordShapeBitmap){
 
             if(chordShapeBitmap != null){
-                Log.i(TAG, chordShapeBitmap.toString());
 
                 getIvChordShape().setImageBitmap(chordShapeBitmap);
 
             }
+
+            getCvChordShape().setTag(getAdapterPosition());
+            getCvChordShape().setOnClickListener(getOnClickListener());
         }
 
         private CardView getCvChordShape() {
