@@ -12,5 +12,5 @@ public interface PlayView {
 
     @NonNull
     CurrentChordAndShapePositionInfoContainer getCurrentChordAndShapePositionInfoContainer();
-    void forcePlayPresenterToshowCurrentChordShape();
+    void forcePlayPresenterToShowCurrentChordShape();
 }

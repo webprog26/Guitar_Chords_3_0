@@ -82,8 +82,8 @@ public class PlayShapesActivity extends BaseActvity implements PlayView{
     }
 
     @Override
-    public void forcePlayPresenterToshowCurrentChordShape() {
-        Log.i(TAG, "forcePlayPresenterToshowCurrentChordShape");
+    public void forcePlayPresenterToShowCurrentChordShape() {
+        Log.i(TAG, "forcePlayPresenterToShowCurrentChordShape");
         getPlayPresenter().showCurrentChordShape(
                 ((CurrentChordAndShapePositionInfoContainer) getIntent()
                         .getSerializableExtra(Constants.CURRENT_CHORD_AND_SHAPE_POSITION_INFO))

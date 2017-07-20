@@ -94,7 +94,7 @@ public class PlayPresenterImpl implements PlayPresenter {
 
     @Override
     public void notifyPlayViewOfFullChordShapesHaveBeenLoaded() {
-        getPlayView().forcePlayPresenterToshowCurrentChordShape();
+        getPlayView().forcePlayPresenterToShowCurrentChordShape();
     }
 
     @Override
