@@ -2,6 +2,8 @@ package com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.models;
 
 import android.support.annotation.NonNull;
 
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.constants.Constants;
+
 import java.util.ArrayList;
 
 /**
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 public class LoadedChordShapesHolderImpl implements LoadedChordShapesHolder{
 
     private final ArrayList<ChordShape> mChordShapes = new ArrayList<>();
+    private int mCurrentChordShapePosition = Constants.UNAVAILABLE_CHORD_SHAPE_POSITION;
 
     @Override
     public void addChordShape(ChordShape chordShape) {
@@ -20,6 +23,7 @@ public class LoadedChordShapesHolderImpl implements LoadedChordShapesHolder{
     @NonNull
     @Override
     public ChordShape getChordShape(int position) {
+        setCurrentChordShapePosition(position);
         return getChordShapes().get(position);
     }
 
@@ -35,5 +39,14 @@ public class LoadedChordShapesHolderImpl implements LoadedChordShapesHolder{
     @Override
     public int getSize() {
         return getChordShapes().size();
+    }
+
+    private void setCurrentChordShapePosition(int currentChordShapePosition) {
+        this.mCurrentChordShapePosition = currentChordShapePosition;
+    }
+
+    @Override
+    public int getCurrentChordShapePosition() {
+        return mCurrentChordShapePosition;
     }
 }

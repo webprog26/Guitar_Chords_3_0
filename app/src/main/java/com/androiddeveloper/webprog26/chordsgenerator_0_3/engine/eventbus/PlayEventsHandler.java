@@ -42,14 +42,14 @@ public class PlayEventsHandler extends EventsHandler {
         for(final ChordShape chordShape: chordShapes){
             getPlayPresenter().getLoadedChordShapesHolder().addChordShape(chordShape);
         }
-        getPlayPresenter().notifyPlayViewOfFullChordShapesHaveBeenLoaded();
+        EventBus.getDefault().post(new FullChordShapesLoadedFromLocalDbEvent());
     }
 
-//    @Subscribe(threadMode = ThreadMode.POSTING)
-//    public void onFullChordShapesLoadedFromLocalDbEvent(FullChordShapesLoadedFromLocalDbEvent fullChordShapesLoadedFromLocalDbEvent){
-//        Log.i(TAG, "onFullChordShapesLoadedFromLocalDbEvent");
-//
-//    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onFullChordShapesLoadedFromLocalDbEvent(FullChordShapesLoadedFromLocalDbEvent fullChordShapesLoadedFromLocalDbEvent){
+        Log.i(TAG, "onFullChordShapesLoadedFromLocalDbEvent");
+        getPlayPresenter().notifyPlayViewOfFullChordShapesHaveBeenLoaded();
+    }
 
     private DbProvider getDbProvider() {
         return mDbProvider;

@@ -15,4 +15,5 @@ public interface LoadedChordShapesHolder {
     ChordShape getChordShape(final int position);
     void clearChordShapesList();
     int getSize();
+    int getCurrentChordShapePosition();
 }

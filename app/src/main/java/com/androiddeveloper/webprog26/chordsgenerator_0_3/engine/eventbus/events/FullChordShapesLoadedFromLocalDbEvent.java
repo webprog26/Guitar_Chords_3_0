@@ -10,13 +10,6 @@ import java.util.ArrayList;
 
 public class FullChordShapesLoadedFromLocalDbEvent {
 
-    private final ArrayList<ChordShape> chordShapes;
+    public FullChordShapesLoadedFromLocalDbEvent() {}
 
-    public FullChordShapesLoadedFromLocalDbEvent(ArrayList<ChordShape> chordShapes) {
-        this.chordShapes = chordShapes;
-    }
-
-    public ArrayList<ChordShape> getChordShapes() {
-        return chordShapes;
-    }
 }

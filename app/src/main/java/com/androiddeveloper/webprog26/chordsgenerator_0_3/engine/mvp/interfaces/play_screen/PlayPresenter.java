@@ -22,4 +22,6 @@ public interface PlayPresenter extends EventsSubscriber{
 
     void loadChordShapesFromLocalDataBase(final String chordTitle);
     void showCurrentChordShape(final int currentShapePosition);
+
+    void checkPlayViewControlsState(final int currentChordShapePosition);
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.App;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.commands.LoadFullChordShapesFromLocalDbCommand;
+import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.constants.Constants;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.dagger.modules.LoadedChordShapesHolderModule;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.EventsHandler;
 import com.androiddeveloper.webprog26.chordsgenerator_0_3.engine.eventbus.PlayEventsHandler;
@@ -76,6 +77,7 @@ public class PlayPresenterImpl implements PlayPresenter {
         final ChordShape currentChordShape = getLoadedChordShapesHolder().getChordShape(currentShapePosition);
 
         if(currentChordShape != null){
+            checkPlayViewControlsState(currentShapePosition);
             Log.i(TAG, "currentChordShape: \n" + currentChordShape.toString());
         } else {
             Log.i(TAG, "currentChordShape is null");
@@ -100,5 +102,15 @@ public class PlayPresenterImpl implements PlayPresenter {
     @Override
     public void clearLoadedChordShapesHolder() {
         getLoadedChordShapesHolder().clearChordShapesList();
+    }
+
+    @Override
+    public void checkPlayViewControlsState(int currentChordShapePosition) {
+
+            getPlayView().setPreviousChordShapeButtonEnabled(currentChordShapePosition
+                    != Constants.FIRST_CHORD_SHAPE_POSITION);
+            getPlayView().setNextChordShapeButtonEnabled(currentChordShapePosition
+                    != (getLoadedChordShapesHolder().getSize() - 1));
+
     }
 }

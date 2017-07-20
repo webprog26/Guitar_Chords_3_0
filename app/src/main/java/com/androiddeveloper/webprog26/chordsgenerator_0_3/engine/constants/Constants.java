@@ -24,4 +24,6 @@ public class Constants {
 
     public static final String CURRENT_CHORD_AND_SHAPE_POSITION_INFO = "current_chord_and_shape_position_info";
 
+    public static final int FIRST_CHORD_SHAPE_POSITION = 0;
+    public static final int UNAVAILABLE_CHORD_SHAPE_POSITION = -1;
 }
